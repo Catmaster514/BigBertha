@@ -7,33 +7,24 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.XboxController;
+  
 
 
 public class Subsystem extends SubsystemBase {
-  private CANSparkMax motor1; 
-  private CANSparkMax motor2;
-  private CANSparkMax motor3;
-  private CANSparkMax motor4;
-  public XboxController xbox;
-  public DifferentialDrive robot;
-
+  
 
 
 
   /** Creates a new ExampleSubsystem. */
+  
   public Subsystem() 
   {
-    xbox = new XboxController(1);
-    motor1 = new CANSparkMax(1, MotorType.kBrushless);
-    motor2 = new CANSparkMax(2, MotorType.kBrushless);
-    motor3 = new CANSparkMax(3, MotorType.kBrushless);
-    motor4 = new CANSparkMax(4, MotorType.kBrushless);
-
+    
+    
   }
 
   /**
@@ -49,6 +40,8 @@ public class Subsystem extends SubsystemBase {
           /* one-time action goes here */
         });
   }
+   //Sets a safety trigger, stops the motor
+ //Gives the inputs for motors and connects the two motors into one subsystem of movement frontMotor.arcadeDrive(xbox-getRightX) * 0.5, xbox-getLeftY) * 0.5); 
 
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).

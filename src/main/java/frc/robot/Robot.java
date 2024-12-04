@@ -3,11 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.XboxController;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -16,8 +18,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
-
+  public XboxController xbox;
+  public DifferentialDrive backMotor;
+  public DifferentialDrive frontMotor;
+  public CANSparkMax backMotor1;
+  public CANSparkMax backMotor2;
+  public CANSparkMax frontMotor1;
+  public CANSparkMax frontMotor2;
+  
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -27,7 +35,14 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    
+    xbox = new XboxController(1);
+    backMotor1 = new CANSparkMax(1, kBrushless);
+    backMotor2 = new CANSparkMax(2, kBrushless);
+    frontMotor1 = new CANSparkMax(3, kBrushless);
+    frontMotor2 = new CANSparkMax(4, kBrushless);    
+    backMotor = new DifferentialDrive(backMotor1, backMotor2);
+    frontMotor = new DifferentialDrive(frontMotor1, frontMotor2);
+    backMotor.setSafetyEnabled(false);
   }
 
   /**
@@ -80,7 +95,17 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() 
+  {
+    if (-xbox.getRightTriggerAxis() › 0.5) 
+  {
+    backMotor.arcadeDrive((-xbox.getRightX) * 0.5, -xbox.getLeftY() * 0.5);
+  } else 
+  {
+    backMotor.stopMotor():
+    frontMotor.stopMotor();
+  }
+  }
 
   @Override
   public void testInit() {
