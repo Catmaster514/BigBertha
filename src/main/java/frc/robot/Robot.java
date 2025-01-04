@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.XboxController;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public XboxController xbox;
-  public DifferentialDrive backMotor;
   public DifferentialDrive frontMotor;
   public CANSparkMax backMotor1;
   public CANSparkMax backMotor2;
@@ -40,9 +39,12 @@ public class Robot extends TimedRobot {
     backMotor2 = new CANSparkMax(2, kBrushless);
     frontMotor1 = new CANSparkMax(3, kBrushless);
     frontMotor2 = new CANSparkMax(4, kBrushless);    
-    backMotor = new DifferentialDrive(backMotor1, backMotor2);
-    frontMotor = new DifferentialDrive(frontMotor1, frontMotor2);
+    frontMotor1.addFollower(frontMotor2);
+    backMotor1.addFollower(backMotor2);
+    frontMotor = new DifferentialDrive(backMotor1::set, frontMotor1::set);    
     backMotor.setSafetyEnabled(false);
+    backMotor1.setInverted(true);
+
   }
 
   /**
@@ -99,7 +101,7 @@ public class Robot extends TimedRobot {
   {
     if (-xbox.getRightTriggerAxis() › 0.5) 
   {
-    backMotor.arcadeDrive((-xbox.getRightX) * 0.5, -xbox.getLeftY() * 0.5);
+    frontMotor.arcadeDrive((-xbox.getRightX) * 0.5, -xbox.getLeftY() * 0.5);
   } else 
   {
     backMotor.stopMotor():
